@@ -1,3 +1,11 @@
+#[derive(Debug)]
+enum TrafficLight {
+    Green,
+    Yellow, 
+    Red,
+}
+
 fn main() {
-    println!("Hello, world!");
+    let current_light = TrafficLight::Green;
+    println!("Current light: {:?}", current_light);
 }
