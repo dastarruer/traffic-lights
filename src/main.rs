@@ -1,3 +1,6 @@
+use std::thread::sleep;
+use std::time::Duration;
+
 #[derive(Debug)]
 enum TrafficLight {
     Green,
@@ -13,10 +16,23 @@ impl TrafficLight {
             TrafficLight::Red => TrafficLight::Green,
         }
     }
+
+    fn duration(&self) -> u64 {
+        match self {
+            TrafficLight::Green => 30,
+            TrafficLight::Yellow => 5,
+            TrafficLight::Red => 25,
+        }
+    }
 }
 
 fn main() {
-    let current_light = TrafficLight::Green;
-    println!("Current light: {:?}", current_light);
-    println!("Next light: {:?}", current_light.next())
+    let mut light = TrafficLight::Red;
+
+    loop {
+        println!("Current light: {:?}", light);
+        println!("Time left: {}", light.duration());
+        sleep(Duration::from_secs(light.duration()));
+        light = light.next(); 
+    }
 }
