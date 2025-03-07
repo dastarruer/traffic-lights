@@ -17,11 +17,11 @@ impl TrafficLight {
         }
     }
 
-    fn duration(&self, time_passed_secs: u64) -> u64 {
+    fn duration(&self) -> u64 {
         match self {
-            TrafficLight::Green => 30 - time_passed_secs,
-            TrafficLight::Yellow => 5 - time_passed_secs,
-            TrafficLight::Red => 5 - time_passed_secs,
+            TrafficLight::Green => 30,
+            TrafficLight::Yellow => 5,
+            TrafficLight::Red => 25,
         }
     }
 }
@@ -34,11 +34,11 @@ fn main() {
     loop {
         clear_screen();
 
-        time_left_secs = light.duration(time_passed_secs);
+        time_left_secs = light.duration() - time_passed_secs;
 
         println!("Current light: {:?}", light);
         println!("Time left: {}", time_left_secs);
-        
+
         sleep(Duration::from_secs(1));
         time_passed_secs += 1;
 
