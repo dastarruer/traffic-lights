@@ -4,7 +4,7 @@ use std::time::Duration;
 #[derive(Debug)]
 enum TrafficLight {
     Green,
-    Yellow, 
+    Yellow,
     Red,
 }
 
@@ -32,15 +32,23 @@ fn main() {
     let mut time_left_secs: u64;
 
     loop {
+        clear_screen();
+
         time_left_secs = light.duration(time_passed_secs);
+
         println!("Current light: {:?}", light);
         println!("Time left: {}", time_left_secs);
-        sleep(Duration::from_secs(1));
-        time_passed_secs += 1; 
         
+        sleep(Duration::from_secs(1));
+        time_passed_secs += 1;
+
         if time_left_secs == 0 {
             light = light.next();
             time_passed_secs = 0;
         }
     }
+}
+
+fn clear_screen() {
+    print!("\x1B[2J\x1B[H");
 }
