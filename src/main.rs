@@ -17,22 +17,30 @@ impl TrafficLight {
         }
     }
 
-    fn duration(&self) -> u64 {
+    fn duration(&self, time_passed_secs: u64) -> u64 {
         match self {
-            TrafficLight::Green => 30,
-            TrafficLight::Yellow => 5,
-            TrafficLight::Red => 25,
+            TrafficLight::Green => 30 - time_passed_secs,
+            TrafficLight::Yellow => 5 - time_passed_secs,
+            TrafficLight::Red => 5 - time_passed_secs,
         }
     }
 }
 
 fn main() {
-    let mut light = TrafficLight::Red;
+    let mut light: TrafficLight = TrafficLight::Red;
+    let mut time_passed_secs: u64 = 0;
+    let mut time_left_secs: u64;
 
     loop {
+        time_left_secs = light.duration(time_passed_secs);
         println!("Current light: {:?}", light);
-        println!("Time left: {}", light.duration());
-        sleep(Duration::from_secs(light.duration()));
-        light = light.next(); 
+        println!("Time left: {}", time_left_secs);
+        sleep(Duration::from_secs(1));
+        time_passed_secs += 1; 
+        
+        if time_left_secs == 0 {
+            light = light.next();
+            time_passed_secs = 0;
+        }
     }
 }
